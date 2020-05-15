@@ -1,4 +1,4 @@
-package blademaster
+package auth
 
 import (
 	"crypto/hmac"

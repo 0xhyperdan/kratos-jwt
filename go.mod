@@ -1,4 +1,4 @@
-module "kratos-jwt"
+module "github.com/C-isCoder/kratos-jwt"
 
 go 1.14
 
