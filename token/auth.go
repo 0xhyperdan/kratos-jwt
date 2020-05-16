@@ -1,4 +1,4 @@
-package auth
+package token
 
 import (
 	"net/http"
@@ -50,7 +50,7 @@ var _filter = []string{
 	"/debug/pprof/profile",
 }
 
-// NoAuth not auth api
+// NoAuth not token api
 func NoAuth(filter []string) {
 	if len(filter) == 0 {
 		return
@@ -58,7 +58,7 @@ func NoAuth(filter []string) {
 	_filter = append(filter, _filter...)
 }
 
-// Auth token auth handler
+// Auth token token handler
 func Auth() bm.HandlerFunc {
 	return func(c *bm.Context) {
 		req := c.Request
