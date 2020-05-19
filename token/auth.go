@@ -1,6 +1,7 @@
 package token
 
 import (
+	"encoding/base64"
 	"net/http"
 	"os"
 
@@ -26,6 +27,7 @@ var (
 	_envSecret     = "JWT_SECRET"
 	_envExp        = "JWT_EXP_TIME"
 	_bearer        = "Bearer "
+	_token         = "token"
 
 	// os env no jwt_secret
 	_osEnvError = ecode.Error(ecode.ServerErr, "环境变量缺少JWT_SECRET值")
@@ -73,6 +75,18 @@ func Auth() bm.HandlerFunc {
 			return
 		}
 		key := req.Header.Get(_authorization)
+		if key == "" {
+			token := req.URL.Query().Get(_token)
+			if token != "" {
+				b, e := base64.URLEncoding.DecodeString(token)
+				if e != nil {
+					c.JSON(nil, _failTokenError)
+					c.Abort()
+					return
+				}
+				key = string(b)
+			}
+		}
 		if key == "" {
 			c.JSON(nil, _noTokenError)
 			c.Abort()
