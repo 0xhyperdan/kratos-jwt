@@ -178,7 +178,7 @@ func (jwt JsonWebToken) parse() *Token {
 	)
 	token := strings.Replace(jwt.String(), _bearer, "", 1)
 	sps := strings.Split(token, ".")
-	if len(sps) == 0 {
+	if len(sps) != 2 {
 		return nil
 	}
 	hb, err := base64.URLEncoding.DecodeString(sps[0])
