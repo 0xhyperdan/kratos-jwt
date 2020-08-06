@@ -134,6 +134,9 @@ func verifyToken(secret, t string) (_ *payload, err error) {
 	if token.Secret != sec {
 		return nil, _changeTokenError
 	}
+	if token.Payload == nil {
+		return nil, _failTokenError
+	}
 	return token.Payload, nil
 }
 
